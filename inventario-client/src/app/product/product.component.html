@@ -1,0 +1,35 @@
+<p>
+  product works!
+</p>
+<button (click)="getProducts()">Obtener Products</button>
+<button (click)="createProduct()">enviar Products</button>
+<div >
+  <table>
+    <thead>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.stock}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+    <label>Nombre del Producto </label>
+    <input type="text" ng-model="ProductModel.name" />
+</div>
+<div>
+    <label>Precio </label>
+    <input type="text" ng-model="ProductModel.price" />
+    <label>Stock </label>
+    <input type="text" ng-model="ProductModel.stock" />
+    <label>id category</label>
+    <input type="text" ng-model="ProductModel.category" />
+</div>
