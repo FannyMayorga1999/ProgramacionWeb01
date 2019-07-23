@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class CategoriesController extends Controller
 {
     public function getCategories(){
-        $category = Category::get();
-        return response()->json($category, 200);
+        $categories = Category::get();
+        return response()->json(["categories"=>$categories]);
     }
     public function postCategory(Request $request){
         $data = $request->json()->all();

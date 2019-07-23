@@ -37,12 +37,11 @@ export class ProductComponent implements OnInit {
     this.service.post(this.url01,this.products).subscribe(
       response => {
         this.getProducts();
-        console.log(response);
+        console.log("oh si "+response);
       },
       error => {
-        console.log(error);
+        console.log("oh no "+error);
       }
-      
     );
   }
   updateProduct(products:ProductModel){

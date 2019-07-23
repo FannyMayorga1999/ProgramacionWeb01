@@ -36,8 +36,8 @@ $factory->define(Category::class, function (Faker $faker) {
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'name' => Str::random(10),
-        'price' => 0.0,
+        'name' => $faker->name,
+        'price' => rand(0,20),
         'stock' => rand(0,20),
         'category_id'=> function(){
             return factory(App\Category::class)->create()->id;

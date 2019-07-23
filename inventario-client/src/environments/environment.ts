@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://172.16.24.88:8000/'
+  apiUrl:'http://127.0.0.1:8000/'
+  //'http://172.16.24.88:8000/'
 };
 
 /*
