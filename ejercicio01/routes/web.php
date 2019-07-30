@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/resource01', function () {
+Route::get('/', function () {
     return "hello fanny";
 });
 

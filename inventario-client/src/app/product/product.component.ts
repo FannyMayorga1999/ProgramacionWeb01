@@ -5,19 +5,31 @@ import {ServicesService} from '../../app/server.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+  /*template: `
+  <div [ngClass]="{
+    'activeClass': condition,
+    'inactiveClass': !condition,
+    'focusClass': condition && otherCondition
+  }"> 
+   Little boy jump over the wall
+  </div>
+`,*/
 })
 export class ProductComponent implements OnInit {
 
   url01 = 'products'
   products : Array<ProductModel>;
   product : ProductModel;
+  name : "";
   
   constructor(private service:ServicesService) { }
 
   ngOnInit() {
     this.product = new ProductModel();
+
     this.products = new Array<ProductModel>();
+    this.getProducts()
   }
 
   getProducts() {
@@ -34,7 +46,8 @@ export class ProductComponent implements OnInit {
 
 
   createProduct(){
-    this.service.post(this.url01,this.products).subscribe(
+    console.log(this.product.category);
+    this.service.post(this.url01,{'product':this.product, 'category':this.product.category}).subscribe(
       response => {
         this.getProducts();
         console.log("oh si "+response);
@@ -45,13 +58,13 @@ export class ProductComponent implements OnInit {
     );
   }
   updateProduct(products:ProductModel){
-    this.service.put(this.url01,this.products).subscribe(
+    this.service.put(this.url01,{'product':this.product, 'category':this.product.category}).subscribe(
       response => {
         this.getProducts();
-        console.log(response);
+        console.log("oh si "+response);
       },
       error => {
-        console.log(error);
+        console.log("oh no "+error);
       }
       
     );
@@ -60,10 +73,11 @@ export class ProductComponent implements OnInit {
     this.service.delete(this.url01).subscribe(
       response => {
         this.getProducts();
-        console.log(response)
+        console.log("oh si "+response);
       },
       error => {
         console.log(error);
+        console.log("oh no "+error);
       } 
     );
   }

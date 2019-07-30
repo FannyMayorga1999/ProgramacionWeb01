@@ -1,98 +1,166 @@
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>One fine body&hellip;</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-  </div>
-</ng-template>
-
-<div class="card">
-  <div class="lessons-list" *ngIf="true else loading">
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <th>Id</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-      </thead>
-      <tbody *ngFor="let product of products">
-        <tr *ngIf="product.id <= 5">
-          <td>{{product.id}}</td>
-          <td>{{product.name}}</td>
-          <td>{{product.price}}</td>
-          <td>{{product.stock}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <ng-template #loading>
-    <div>Loading...</div>
+<div class="center">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>One fine body&hellip;</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
   </ng-template>
-</div>
+
+  <div class="card">
+    <div class="lessons-list container" *ngIf="true else loading">
+      <table class="table table-striped; width:2000">
+        <thead class="thead-dark">
+          <th>Id</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Oye</th>
+        </thead>
+        <tbody *ngFor="let product of products">
+          <!--<tr *ngIf="product.id <= 5" style="color: chartreuse">-->
+
+          <tr [ngClass]="{'text-success': product.stock <=20,
+                          'text-danger': product.stock >=21,
+                          'text-warning': product.stock <=30}">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.stock}}</td>
+            <td>
+              <Button  button type="button" class="btn btn-info center" style="margin-left:20%" data-toggle="modal"
+              data-target="#editarProducto" style="text-align: center;">Editar</Button>
+              <Button value="product.id" class="btn btn-danger center"  (click)="deleteProduct()" >Eliminar</Button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #loading>
+      <div>Loading...</div>
+    </ng-template>
+  </div>
 
 
+  <div class="row" style="align-content: center">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-success center" style="margin-left:20%" data-toggle="modal"
+        data-target="#exampleModal" style="text-align: center;">
+        Añadir datos
+      </button>
+    </div>
+  </div>
 
-<button (click)="getProducts()" class="btn btn-primary">Obtener Products</button>
-
-
-<!--
-  
-</div> 
--->
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-  Enviar datos
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Nombre del Producto</span>
+            </div>
+            <input [(ngModel)]="product.name" type="text" class="form-control" aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Precio</span>
+            </div>
+            <input [(ngModel)]="product.price" type="text" class="form-control" aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div>
+            <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Nombre del Producto</span>
+                <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
               </div>
-              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input [(ngModel)]="product.stock" type="text" class="form-control" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
             </div>
-            <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Precio</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <div class="form-group">
+              <select [(ngModel)]="product.category.id" class="custom-select" required>
+                <option value="">Open this select menu</option>
+                <option value="1">Fruta</option>
+                <option value="2">Vegetales</option>
+                <option value="3">Jugos</option>
+              </select>
+              <div class="invalid-feedback">Example invalid custom select feedback</div>
             </div>
-        <div>
-            <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-              </div>
-              <div class="input-group input-group-sm mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">category</span>
-                  </div>
-                  <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button (click)="createProduct()" class="btn btn-success">Guardar Datos</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button (click)="createProduct()" class="btn btn-success">Guardar Datos</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="modal fade" id="editarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Nombre del Producto</span>
+            </div>
+            <input [(ngModel)]="product.name" type="text" class="form-control" aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Precio</span>
+            </div>
+            <input [(ngModel)]="product.price" type="text" class="form-control" aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div>
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
+              </div>
+              <input [(ngModel)]="product.stock" type="text" class="form-control" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="form-group">
+              <select [(ngModel)]="product.category.id" class="custom-select" required>
+                <option value="">Open this select menu</option>
+                <option value="1">Fruta</option>
+                <option value="2">Vegetales</option>
+                <option value="3">Jugos</option>
+              </select>
+              <div class="invalid-feedback">Example invalid custom select feedback</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button (click)="updateProduct()" class="btn btn-success">Actualizar Datos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
