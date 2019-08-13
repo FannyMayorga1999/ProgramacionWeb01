@@ -9,7 +9,7 @@ use App\Category;
 class ProductsController extends Controller
 {
     public function getProducts(){
-        $products = Product::get();
+        $products = Product::with("category")->get();
         return response()->json(["products"=> $products], 200);
     }
     public function postProduct(Request $request){
@@ -27,8 +27,7 @@ class ProductsController extends Controller
         return response()->json(["products"=> $products], 201);
     }
     public function deleteProduct(Request $request){
-        $data = $request->json()->all();
-        $products = Product::findOrFail($data['id']);
+        $products = Product::findOrFail($request->id);
         $response = $products->delete();
         return response()->json(["products"=> $products], 201);
     }

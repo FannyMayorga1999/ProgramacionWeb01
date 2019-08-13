@@ -69,8 +69,8 @@ export class ProductComponent implements OnInit {
       
     );
   }
-  deleteProduct(products:ProductModel){
-    this.service.delete(this.url01).subscribe(
+  deleteProduct(product:ProductModel){
+    this.service.delete(this.url01+"?id="+product.id).subscribe(
       response => {
         this.getProducts();
         console.log("oh si "+response);
@@ -80,6 +80,12 @@ export class ProductComponent implements OnInit {
         console.log("oh no "+error);
       } 
     );
+  }
+
+  seleccionarProduct(product:ProductModel){
+    console.log(product);
+    this.product= product;
+
   }
 
 }

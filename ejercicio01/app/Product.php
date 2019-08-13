@@ -13,8 +13,8 @@ class Product extends Model
 
     ];
 
-    public function Category(){
-        return $this -> hasOne('App\Category');
+    public function category(){
+        return $this -> belongsTo('App\Category');
     }
 
     public function Providers(){
